@@ -48,4 +48,4 @@ find_fault(Fault) :- fault(Fault).
 ![image](https://github.com/user-attachments/assets/fcb0ff0f-b112-45f8-adf0-3683e77cc644)
 
 ### Result:
-Thus the simple omputer maintenance expert system was built sucessfully.
+Thus the simple computer maintenance expert system was built sucessfully.
