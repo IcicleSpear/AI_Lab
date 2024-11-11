@@ -1,91 +1,63 @@
-# Ex.No: 11  Planning –  Monkey Banana Problem
-### DATE: 10.10.2024                                                                     
+# Ex.No: 11  Planning –  Block World Problem 
+## Date: 03.10.2024
 ### REGISTER NUMBER : 212221040004
 ### AIM: 
-To find the sequence of plan for Monkey Banana problem using PDDL Editor.
+To find the sequence of plan for Block word problem using PDDL  
 ###  Algorithm:
-Step 1:  Start the program <br> 
-Step 2 : Create a domain for Monkey Banana Problem. <br> 
-Step 3:  Create a domain by specifying predicates. <br> 
-Step 4: Specify the actions GOTO, CLIMB, PUSH-BOX, GET-KNIFE, GRAB-BANANAS in Monkey Banana problem.<br>  
-Step 5:   Define a problem for Monkey Banana problem.<br> 
-Step 6:  Obtain the plan for given problem.<br> 
-Step 7: Stop the program.<br> 
+Step 1 :  Start the program <br>
+Step 2 : Create a domain for Block world Problem <br>
+Step 3 :  Create a domain by specifying predicates clear, on table, on, arm-empty, holding. <br>
+Step 4 : Specify the actions pickup, putdown, stack and un-stack in Block world problem <br>
+Step 5 :  In pickup action, Robot arm pick the block on table. Precondition is Block is on table and no other block on specified block and arm-hand empty.<br>
+Step 6:  In putdown action, Robot arm place the block on table. Precondition is robot-arm holding the block.<br>
+Step 7 : In un-stack action, Robot arm pick the block on some block. Precondition is Block is on another block and no other block on specified block and arm-hand empty.<br>
+Step 8 : In stack action, Robot arm place the block on under block. Precondition is Block holded by robot arm and no other block on under block.<br>
+Step 9 : Define a problem for block world problem.<br> 
+Step 10 : Obtain the plan for given problem.<br> 
+     
 ### Program:
-
-(define (domain monkey)
-(:requirements :strips)
-(:constants monkey box knife bananas glass waterfountain)
-(:predicates (location ?x)
-Preview Code Blame Raw
-(on-floor)
-(at ?m ?x)
-(hasknife)
-(onbox ?x)
-(hasbananas)
-(hasglass)
-(haswater))
-;; movement and climbing
-(:action GO-TO
-:parameters (?x ?y)
-:precondition (and (location ?x) (location ?y) (on-floor) (at monkey
-?y))
-:effect (and (at monkey ?x) (not (at monkey ?y))))
-(:action CLIMB
-:parameters (?x)
-:precondition (and (location ?x) (at box ?x) (at monkey ?x))
-:effect (and (onbox ?x) (not (on-floor))))
-(:action PUSH-BOX
-:parameters (?x ?y)
-:precondition (and (location ?x) (location ?y) (at box ?y) (at
-monkey ?y)
-(on-floor))
-:effect (and (at monkey ?x) (not (at monkey ?y))
-(at box ?x) (not (at box ?y))))
-;; getting bananas
-(:action GET-KNIFE
-:parameters (?y)
-:precondition (and (location ?y) (at knife ?y) (at monkey ?y))
-:effect (and (hasknife) (not (at knife ?y))))
-(:action GRAB-BANANAS
-:parameters (?y)
-:precondition (and (location ?y) (hasknife)
-(at bananas ?y) (onbox ?y))
-:effect (hasbananas))
-;; getting water
-(:action PICKGLASS
-:parameters (?y)
-:precondition (and (location ?y) (at glass ?y) (at monkey ?y))
-:effect (and (hasglass) (not (at glass ?y))))
-(:action GETWATER
-:parameters (?y)
-:precondition (and (location ?y) (hasglass)
-(at waterfountain ?y)
-(at monkey ?y)
-(onbox ?y))
-:effect (haswater)))
-
+```
+(define (domain blocksworld)
+(:requirements :strips :equality)
+(:predicates (clear ?x)
+(on-table ?x)
+(arm-empty)
+(holding ?x)
+(on ?x ?y))
+(:action pickup
+:parameters (?ob)
+:precondition (and (clear ?ob) (on-table ?ob) (arm-empty))
+:effect (and (holding ?ob) (not (clear ?ob)) (not (on-table ?ob))
+(not (arm-empty))))
+(:action putdown
+:parameters (?ob)
+:precondition (and (holding ?ob))
+:effect (and (clear ?ob) (arm-empty) (on-table ?ob)
+(not (holding ?ob))))
+(:action stack
+:parameters (?ob ?underob)
+:precondition (and (clear ?underob) (holding ?ob))
+:effect (and (arm-empty) (clear ?ob) (on ?ob ?underob)
+(not (clear ?underob)) (not (holding ?ob))))
+(:action unstack
+:parameters (?ob ?underob)
+:precondition (and (on ?ob ?underob) (clear ?ob) (arm-empty))
+:effect (and (holding ?ob) (clear ?underob)
+(not (on ?ob ?underob)) (not (clear ?ob)) (not (arm-empty))))
+```
 ### Input 
 
 (define (problem pb1)
-(:domain monkey)
-(:objects p1 p2 p3 p4 bananas monkey box knife)
-(:init (location p1)
-(location p2)
-(location p3)
-(location p4)
-(at monkey p1)
-(on-floor)
-(at box p2)
-(at bananas p3)
-(at knife p4)
-)
-(:goal (and (hasbananas)))
-)
+(:domain blocksworld)
+(:objects a b)
+(:init (on-table a) (on-table b) (clear a) (clear b) (arm-empty))
+(:goal (and (on a b))))
+
 
 ### Output/Plan:
 
-![image](https://github.com/santhoshkumar24263/AI_Lab_2023-24/assets/127171952/6b4b2696-f316-454a-a7ce-00bf281ce73e)
+![image](https://github.com/santhoshkumar24263/AI_Lab_2023-24/assets/127171952/bb413dbd-9c7d-43ec-b5dc-144e2a03abf3)
+
 
 ### Result:
-Thus the plan was found for the initial and goal state of given problem.
+Thus the plan was found for the initial and goal state of block world problem.
