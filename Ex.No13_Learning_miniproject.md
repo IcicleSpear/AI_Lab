@@ -5,15 +5,25 @@
 To write a program to develop a predictive model for classifying dementia types based on patient data, using a TabNet
 ###  Algorithm:
 1.Import Libraries
+
 2.Load Data
+
 3.Handle Missing Values
+
 4.Encode Data
+
 5.Set Target
+
 6.Select Features
+
 7.Normalize Data and Split Data
+
 8.Define Model
+
 9.Train Model
+
 10.Evaluate Model
+
 11.Display Result
 ### Program:
 # Import necessary libraries
