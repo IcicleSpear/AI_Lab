@@ -1,5 +1,5 @@
 # Ex.No: 10  Logic Programming –  Simple queries from facts and rules
-### DATE: 12/09/24                                                                            
+### DATE:26/9/2024                                                                           
 ### REGISTER NUMBER : 212221040004
 ### AIM: 
 To write a prolog program to find the answer of query. 
@@ -21,9 +21,20 @@ Construct the FOL representation for the following sentences <br>
 5.	 Bill eats peanuts  <br> 
    Convert into clause form and Prove that John like Apple by using Prolog. <br> 
 ### Program:
-
-
+```
+likes(john,X):-
+ food(X).
+eats(bill,X):-
+ eats(sue,X).
+eats(Y,X):-
+ food(X).
+eats(bill,peanuts).
+food(apple).
+food(chicken).
+food(peanuts).
+```
 ### Output:
+![image](https://github.com/Preethi132/AI_Lab_2023-24/assets/136288465/fea655f6-a05d-4b62-bd66-b0b6c26c5724)
 
 ### Task 2:
 Consider the following facts and represent them in predicate form: <br>              
@@ -35,17 +46,41 @@ Convert the facts in predicate form to clauses and then prove by resolution: “
 
 ### Program:
 
+likes(steve,X):-
+ easycourse(X).
+hard(sciencecourse).
+easycourse(X):-
+ course(X,dept(havefun)).
+course(bk301,dept(havefun)).
 
 ### Output:
+![image](https://github.com/Preethi132/AI_Lab_2023-24/assets/136288465/ee70a5b2-99d7-4621-8f9b-26af4bf6704e)
 
 ### Task 3:
 Consider the statement <br> 
 “This is a crime for an American to sell weapons to hostile nations. The Nano , enemy of America has some missiles and its missiles were sold it by Colonal West who is an American” <br> 
 Convert to Clause form and prove west is criminal by using Prolog.<br> 
 ### Program:
-
-
+```
+criminal(X):-
+ american(X),
+ weapon(Y),
+ hostile(Z),
+ sells(X,Y,Z).
+weapon(Y):-
+ missile(Y).
+hostile(Z):-
+ enemy(Z,X).
+sells(west,Y,nano):-
+ missile(Y),
+ owns(nano,Y).
+missile(m).
+owns(nano,m).
+enemy(nano,america).
+american(west). 
+```
 ### Output:
+![image](https://github.com/Preethi132/AI_Lab_2023-24/assets/136288465/868c121e-dd84-4ce7-b0e6-67884799e06e)
 
 ### Result:
 Thus the prolog programs were executed successfully and the answer of query was found.
